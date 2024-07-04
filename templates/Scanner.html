@@ -1,0 +1,228 @@
+{% extends 'index.html' %} {% block main %}
+
+
+
+<div class="container">
+    <div class="header">
+        <h1>الماسح الضوئي</h1>
+    </div>
+    <div id="interactive" style="height: 50px !important;" class="camera-container"></div>
+    <div class="result-section">
+        <h2 id="result"></h2>
+    </div>
+    <div class="button-section mt-3">
+        <button style="background-color: #7D321D; border-color: #7D321D;" id="startButton" class="btn btn-primary">بدء المسح</button>
+        <button id="pauseButton" class="btn btn-secondary" disabled>ايقاف المسح الضوئي</button>
+    </div>
+    <div id="productInfo" class="product-info mt-3">
+        <h4 id="Type"></h4>
+        <p id="pCID"></p>
+        <p id="EmpName"></p>
+        <p id="EmpEmpName"></p>
+        <p id="EmpNum"></p>
+        <p id="Mange"></p>
+        <p id="DeviceType"></p>
+        <p id="manufacturingCompanies"></p>
+        <p id="modale"></p>
+        <p id="serialnum"></p>
+        <p id="location"></p>
+        <p id="offecenum"></p>
+
+        <p id="plCID"></p>
+        <p id="Labname"></p>
+        <p id="PcNum"></p>
+        <p id="PcProsore"></p>
+        <p id="Pcmodel"></p>
+        <p id="pckybord"></p>
+        <p id="Pcmouse"></p>
+        <p id="details"></p>
+
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .camera-container {
+        position: relative !important;
+        width: 100% !important;
+        height: 50% !important;
+        padding-bottom: 100% !important;
+        border: 2px solid #ddd !important;
+        border-radius: 5px !important;
+        overflow: hidden !important;
+    }
+    
+    #interactive video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .result-section {
+        text-align: center;
+    }
+    
+    .button-section {
+        text-align: center;
+    }
+    
+    .button-section button {
+        margin-right: 10px;
+    }
+    
+    .product-info {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Initialize the scanner state as stopped
+    let isScannerRunning = false;
+
+    // Function to start the barcode scanner
+    function startScanner() {
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector("#interactive"),
+                constraints: {
+                    facingMode: "environment" // Use the rear camera
+                },
+            },
+            decoder: {
+                readers: ["code_128_reader"] // Specify , "ean_reader", "upc_reader" the barcode formats to scan
+            },
+        }, function(err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            Quagga.start();
+            isScannerRunning = true;
+            document.querySelector("#startButton").disabled = true;
+            document.querySelector("#pauseButton").disabled = false;
+        });
+    }
+
+    // Function to pause the barcode scanner
+    function pauseScanner() {
+        Quagga.stop(); // Stop the camera
+        isScannerRunning = false;
+        document.querySelector("#startButton").disabled = false;
+        document.querySelector("#pauseButton").disabled = true;
+    }
+
+    // Enable scanning when the "Start Scanning" button is clicked
+    document.querySelector("#startButton").addEventListener("click", function() {
+        if (!isScannerRunning) {
+            startScanner();
+            document.querySelector("#Type").textContent = '';
+            document.querySelector("#pCID").textContent = '';
+            document.querySelector("#EmpName").textContent = '';
+            document.querySelector("#EmpEmpName").textContent = '';
+            document.querySelector("#EmpNum").textContent = '';
+            document.querySelector("#Mange").textContent = '';
+            document.querySelector("#DeviceType").textContent = '';
+            document.querySelector("#manufacturingCompanies").textContent = '';
+            document.querySelector("#modale").textContent = '';
+            document.querySelector("#serialnum").textContent = '';
+            document.querySelector("#location").textContent = '';
+            document.querySelector("#offecenum").textContent = '';
+            document.querySelector("#Type").textContent = '';
+            document.querySelector("#plCID").textContent = '';
+            document.querySelector("#Labname").textContent = '';
+            document.querySelector("#PcNum").textContent = '';
+            document.querySelector("#PcProsore").textContent = '';
+            document.querySelector("#Pcmodel").textContent = '';
+            document.querySelector("#pckybord").textContent = '';
+            document.querySelector("#Pcmouse").textContent = '';
+            document.querySelector("#details").textContent = '';
+        }
+    });
+
+    // Pause scanning when the "Pause Scanning" button is clicked
+    document.querySelector("#pauseButton").addEventListener("click", function() {
+        if (isScannerRunning) {
+            pauseScanner();
+        }
+    });
+
+    // Event listener for successful barcode detection
+    Quagga.onDetected(function(result) {
+        const barcodeValue = result.codeResult.code;
+        document.querySelector("#result").textContent = barcodeValue;
+
+        // Pause the scanner automatically after a successful detection
+        pauseScanner();
+
+        // Send barcode value to the server using Ajax
+        jQuery.ajax({
+            url: '/process_barcode',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'barcode': barcodeValue
+            }),
+            success: function(data) {
+
+
+                if (data.type === 'Employ Device') {
+                    document.querySelector("#Type").textContent = data.type;
+                    document.querySelector("#pCID").textContent = data.pCID;
+                    document.querySelector("#EmpName").textContent = data.EmpName;
+                    document.querySelector("#EmpEmpName").textContent = data.EmpEmpName;
+                    document.querySelector("#EmpNum").textContent = data.EmpNum;
+                    document.querySelector("#Mange").textContent = data.Mange;
+                    document.querySelector("#DeviceType").textContent = data.DeviceType;
+                    document.querySelector("#manufacturingCompanies").textContent = data.manufacturingCompanies;
+                    document.querySelector("#modale").textContent = data.modale;
+                    document.querySelector("#serialnum").textContent = data.serialnum;
+                    document.querySelector("#location").textContent = data.location;
+                    document.querySelector("#offecenum").textContent = data.offecenum;
+
+
+                } else if (data.type === 'Lab Device') {
+                    document.querySelector("#Type").textContent = data.type;
+                    document.querySelector("#plCID").textContent = data.pCID;
+                    document.querySelector("#Labname").textContent = data.Labname;
+                    document.querySelector("#PcNum").textContent = data.PcNum;
+                    document.querySelector("#PcProsore").textContent = data.PcProsore;
+                    document.querySelector("#Pcmodel").textContent = data.Pcmodel;
+                    document.querySelector("#pckybord").textContent = data.pckybord;
+                    document.querySelector("#Pcmouse").textContent = data.Pcmouse;
+                    document.querySelector("#details").textContent = data.details;
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+
+{% endblock main %}

@@ -1,0 +1,47 @@
+{% extends 'furnituremang.html' %} 
+{% block searchval %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <div class="title">
+        <i class="uil uil-clock-three"></i>
+        <span class="text">طاولات المكاتب </span> 
+ 
+
+    </div>
+    <div style="width: 30%;" class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >بحث</span>
+        </div>
+        <input type="text" class="form-control" id="searchInput" autocomplete="off" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      </div>  
+    <div class="bd-example" data-example-id="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الاسم</th>
+                    <th>عدد الطاولات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in all %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+{% endblock searchval %}

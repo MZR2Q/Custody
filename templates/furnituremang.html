@@ -1,0 +1,52 @@
+{% extends 'index.html' %} {% block main %}
+<div class="dash-content">
+    <div class="overview">
+        <div class="title">
+            <i class="uil uil-tachometer-fast-alt"></i>
+            <span class="text">عهد المكاتب</span>
+        </div>
+
+        <div class="boxes">
+            <a href="/Dashboard/furniture/disks" class="box box1" type="submit" style="text-decoration: none !important;">
+                <input type="text" value="labdev" hidden name="Categ" id="">
+                <i class="uil "><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 512 512"><path fill="currentColor" d="M41 265v30h430v-30zm39 48v158.066h32V313zm320 0v158.066h32V313z"/></svg></i>
+                <span class="text">طاولات المكاتب</span>
+                <span class="number">{{x}}</span>
+            </a>
+
+            <a href="/Dashboard/furniture/genr" class="box box2" type="submit" style="text-decoration: none !important;">
+                <input type="text" value="coldev" hidden name="Categ" id="">
+                <i class="uil "><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><path fill="currentColor" d="M5.038 19.346q-.213 0-.356-.143t-.144-.357v-1H4q-.846 0-1.423-.577Q2 16.692 2 15.846v-5q0-.633.434-1.066q.433-.434 1.066-.434t1.066.434Q5 10.213 5 10.846v3.5h14v-3.5q0-.633.434-1.066q.433-.434 1.066-.434t1.066.434q.434.433.434 1.066v5q0 .846-.577 1.423q-.577.577-1.423.577h-.538v1q0 .194-.134.347q-.134.153-.328.153q-.213 0-.357-.143q-.143-.143-.143-.357v-1H5.538v1q0 .214-.143.357t-.357.143m.962-6v-2.5q0-.933-.559-1.664T4 8.346V7.231q0-.846.577-1.423Q5.154 5.23 6 5.23h12q.846 0 1.423.577Q20 6.385 20 7.23v1.115q-.888.1-1.444.828Q18 9.902 18 10.846v2.5z"/></svg></i>
+                <span class="text">بحث عام</span>
+                <span class="number">{{dd}}</span>
+            </a>
+
+            <a href="/Dashboard/furniture" class="box box3" type="submit" style="text-decoration: none !important;">
+                <input type="text" value="requ" hidden name="Categ" id="">
+                <i class="uil "><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 15.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Zm.628-8.734c.242-2.012.362-3.017.944-3.704a3 3 0 0 1 .638-.566C8.96 2 9.974 2 12 2s3.039 0 3.79.496a3 3 0 0 1 .638.566c.582.687.703 1.692.944 3.704l.091.757c.25 2.088.376 3.132-.221 3.804c-.597.673-1.648.673-3.75.673h-2.983c-2.103 0-3.154 0-3.75-.673c-.597-.672-.472-1.716-.222-3.804zM12 12v2"/><path stroke-linecap="round" d="M12 22v-2m0 0v-2.5m0 2.5l.466.116A2.88 2.88 0 0 1 14.5 22M12 20l-.466.116A2.88 2.88 0 0 0 9.5 22M6 16l-.865-2.595c-.073-.22-.11-.33-.18-.482a2.36 2.36 0 0 0-.16-.297C4.34 11.876 3.734 11.5 2 11.5M18 16l.865-2.595c.073-.22.11-.33.18-.482c.072-.153.1-.201.16-.297c.456-.75 1.063-1.126 2.795-1.126"/></g></svg></i>
+                <span class="text">تقارير</span>
+                <span class="number">0</span>
+            </a>
+            <a href="/Dashboard/furniture" class="box box4" type="submit" style="text-decoration: none !important;">
+                <input type="text" value="requ" hidden name="Categ" id="">
+                <i> <iconify-icon icon="gala:add"></iconify-icon></i>
+                <span class="text">مكتب</span>
+                <span class="number">0</span>
+            </a>
+
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var categValue = urlParams.get('Categ');
+            console.log(categValue); // Print the value to the console
+        });
+    </script>
+    {% block searchval %} {% endblock searchval %}
+
+</div>
+{% endblock main %}

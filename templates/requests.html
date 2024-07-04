@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <!-- Include Bootstrap CSS -->
+   <!-- Bootstrap 5 CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+   <!-- Font Awesome CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+             <style>
+        .completed-order {
+            background-color: #227509; /* Light green background for completed orders */
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, #868185, #5a5659);">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='ph/aa.png') }}" alt="..." height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </nav>
+
+    <div class="container" >
+        <h1 style="margin-top: 4%; border-radius: 4% !important; border: #5a5659 !important;" class=" text-center">Reports</h1>
+
+        <!-- Table to display orders -->
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr style="margin-left: 10% !important;"  >
+                    <th>رقم الطالب </th>
+                    <th>اسم الطالب </th>
+                    <th>المشكلة </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+
+                {% for i in requests %}
+                
+                
+                    <tr class="completed-order">
+                        <p>{{i[5]}}</p>
+                        <p>{{i[6]}}</p>
+                        <p> Lab : {{i[2]}} Pc : {{i[3]}}  > {{i[1]}}</p>
+                        <td>
+                            <form method="POST" action="/requests">
+                                <input type="text" hidden name="request_id" value="{{i[0]}}" id="">
+                                <button type="submit" class="btn btn-danger">تفاصيل </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <footer class="footer text-center py-3">
+        © 2023 Copyright: Eng.Hamed & MAZYED & ANWAR
+    </footer>
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

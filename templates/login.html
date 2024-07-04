@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    <title>Sign in</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form action="/" method="POST" class="sign-in-form">
+                    <h2 class="title">تسجيل الدخول </h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="emailUsername" placeholder="اسم المستخدم " />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder=" الرمز السري " />
+                    </div>
+                    <input type="submit" style="background-color: #7D321D; color:aliceblue;" value="دخول " class="btn solid" />
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <img src="https://upload.wikimedia.org/wikipedia/ar/4/47/%D8%B4%D8%B9%D8%A7%D8%B1_%D8%AC%D8%A7%D9%85%D8%B9%D8%A9_%D8%AD%D9%81%D8%B1%D8%A7%D9%84%D8%A8%D8%A7%D8%B7%D9%86.png " alt="... " height="100 " width="325 ">
+                </div>
+                <img src="{{ url_for( 'static', filename='undraw_success_factors_re_ce93.svg' ) }} " class="image " alt=" " />
+            </div>
+            <div class="panel right-panel ">
+                <div class="content ">
+                    <h3>One of us ?</h3>
+                    <p>
+                    </p>
+                    <button class="btn transparent " id="sign-in-btn ">
+                        تسجيل دخول 
+                    </button>
+                </div>
+                <img src="{{ url_for( 'static', filename='undraw_success_factors_re_ce93.svg' ) }} " class="image " alt=" " />
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for( 'static', filename='app.js' ) }} "></script>
+
+</body>
+
+</html>

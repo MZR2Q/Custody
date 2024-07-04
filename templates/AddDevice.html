@@ -1,0 +1,135 @@
+{% extends 'devicesMange.html' %} {% block searchval %}
+
+<div class="container mt-5">
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <button style="background-color: #7D321D; border-color: #7D321D;" class="btn btn-primary " id="toggleForms">تبديل النماذج</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="activity" id="form1">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">جهاز معمل جديد</span>
+                </div>
+                <form action="/add_devices" method="POST" class="border rounded p-4 border-primary">
+                    <div class="mb-3">
+                        <label for="lab_name" class="form-label">معمل </label>
+                        <input type="text" class="form-control" id="lab_name" name="lab_name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pc_num" class="form-label">رقم الجهاز </label>
+                        <input type="text" class="form-control" id="pc_num" name="pc_num" required>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col-md-6">
+                            <label for="pc_prosser" class="form-label">المعاجل </label>
+                            <input type="text" class="form-control" id="pc_processor" name="pc_prosser" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pc_model" class="form-label">النوع/ الشركة </label>
+                            <input type="text" class="form-control" id="pc_model" name="pc_model" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col-md-6">
+                            <label for="pc_keyboard" class="form-label">لوحة مفاتيح </label>
+                            <input type="text" class="form-control" id="pc_keyboard" name="pc_keyboard" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pc_mouse" class="form-label">فاره</label>
+                            <input type="text" class="form-control" id="pc_mouse" name="pc_mouse" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="details" class="form-label">شاشه</label>
+                        <input type="text" class="form-control" id="details" name="details" required>
+                    </div>
+
+                    <button style="background-color: #7D321D; border-color: #7D321D;" type="submit" class="btn btn-primary">حفظ</button>
+                </form>
+            </div>
+
+            <div class="activity d-none" id="form2">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">اضف جهاز قسم جديد </span>
+                </div>
+                <form method="POST" action="/insert" class="border rounded p-4 border-primary">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="empName" class="form-label">اسم الموظف </label>
+                                <input type="text" class="form-control" id="empName" name="empName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="empempName" class="form-label">المسمى الوظيفي :</label>
+                                <input type="text" class="form-control" id="empempName" name="empempName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="empNum" class="form-label">الرقم الوظيفي </label>
+                                <input type="text" class="form-control" id="empNum" name="empNum" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mange" class="form-label">اسم القسم </label>
+                                <input type="text" class="form-control" id="mange" name="mange" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="deviceType" class="form-label">نوع الجهاز </label>
+                                <input type="text" class="form-control" id="deviceType" name="deviceType" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="manufacturingCompanies" class="form-label">الشركة المصنعة </label>
+                                <input type="text" class="form-control" id="manufacturingCompanies" name="manufacturingCompanies" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="modale" class="form-label">النوع </label>
+                                <input type="text" class="form-control" id="modale" name="modale" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="serialNum" class="form-label">الرقم التسلسلي</label>
+                                <input type="text" class="form-control" id="serialNum" name="serialNum" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="location" class="form-label">موقع الجهاز </label>
+                                <input type="text" class="form-control" id="location" name="location" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="officeNum" class="form-label">رقم المكتب </label>
+                                <input type="text" class="form-control" id="officeNum" name="officeNum" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" style="color: aliceblue;background-color: #7D321D;">حفظ </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    document.getElementById('toggleForms').addEventListener('click', function() {
+        document.getElementById('form1').classList.toggle('d-none');
+        document.getElementById('form2').classList.toggle('d-none');
+    });
+</script>
+
+{% endblock searchval %}

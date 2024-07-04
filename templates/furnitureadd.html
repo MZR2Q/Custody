@@ -1,0 +1,131 @@
+{% extends 'index.html' %} {% block main %}
+<style>
+/* Add custom styles for checkbox styling and grid layout */
+.form-check {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.form-check input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+
+.form-check label {
+    position: relative;
+    padding-left: 30px; /* Space for the custom checkbox */
+    cursor: pointer;
+    font-weight: normal; /* Adjust as needed */
+}
+
+.form-check label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Size of the custom checkbox */
+    height: 20px; /* Size of the custom checkbox */
+    border: 2px solid #7D321D; /* Border color */
+    background-color: #fff; /* Background color */
+    transition: background-color 0.3s, border-color 0.3s; /* Add transition for a smooth effect */
+}
+
+.form-check input[type="checkbox"]:checked + label:before {
+    background-color: #7D321D; /* Change background color when checkbox is checked */
+    border-color: #7D321D; /* Change border color when checkbox is checked */
+}
+
+/* Arrange checkboxes in rows and columns using grid layout */
+.card-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+/* Optional: Add some spacing between the form elements */
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+</style>
+<div style="margin-top: 8% !important;" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card " >
+                <div style="background-color: #7D321D; color:white;" class="card-header text-center">
+                    <h4>نموذج المكتب</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/add_item" method="POST" >
+
+ 
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroup-sizing-sm">رقم المكتب</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Small" name="officeNumber" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroup-sizing-sm">الأسم</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Small" name="name" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                          <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroup-sizing-sm">الرقم الوظيفي</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Small" name="empid" aria-describedby="inputGroup-sizing-sm">
+                          </div>
+                        {% for i in range(0, fields|length, 3) %}
+                        <div class="row">
+                            {% for j in range(0, 3) %}
+                                {% set index = i + j %}
+                                {% if index < fields|length %}
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroup-sizing-sm">{{ fields[index]['label'] }}</span>
+                                            </div>
+                                            <input type="number" class="form-control" aria-label="Small"  name="{{ fields[index]['name'] }}" aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        
+                        
+
+                        <div class="text-center">
+                            <button type="submit" class="btn" style="background-color: #7D321D; color:rgb(255, 255, 255);">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    /* Add custom styles for right-to-left alignment */
+    .card-body, .form-check, .form-check-inline, .text-center {
+        direction: rtl;
+        text-align: right;
+    }
+    .zero-span {
+        display: none;
+    }
+
+    /* When checkbox is not checked, hide the number input and show the zero span */
+    .form-check-input:not(:checked) ~ .number-input {
+        display: none;
+    }
+    .form-check-input:not(:checked) ~ .zero-span {
+        display: inline;
+    }
+    /* Add your existing styles here */
+
+</style>
+{% endblock main %}
+

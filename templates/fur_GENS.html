@@ -1,0 +1,125 @@
+{% extends 'furnituremang.html' %} {% block searchval %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    .title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .input-group {
+        width: 50%;
+        margin: 0 auto;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* Optional: Adds ellipsis (...) if text overflows */
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="title">
+    <i class="uil uil-clock-three"></i>
+    <span class="text">البحث العام</span>
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">بحث</span>
+    </div>
+    <input type="text" class="form-control" id="searchInput" autocomplete="off" placeholder="البحث" aria-label="البحث" aria-describedby="basic-addon1">
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                {% for field in fields %}
+                <th>{{ field['label'] }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for all in all %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{all[1]}}</td>
+                <td>{{all[2]}}</td>
+                <td>{{all[3]}}</td>
+                <td>{{all[4]}}</td>
+                <td>{{all[5]}}</td>
+                <td>{{all[6]}}</td>
+                <td>{{all[7]}}</td>
+                <td>{{all[8]}}</td>
+                <td>{{all[9]}}</td>
+                <td>{{all[10]}}</td>
+                <td>{{all[11]}}</td>
+                <td>{{all[12]}}</td>
+                <td>{{all[13]}}</td>
+                <td>{{all[14]}}</td>
+                <td>{{all[15]}}</td>
+                <td>{{all[16]}}</td>
+                <td>{{all[17]}}</td>
+                <td>{{all[18]}}</td>
+                <td>{{all[19]}}</td>
+                <td>{{all[20]}}</td>
+                <td>{{all[21]}}</td>
+                <td>{{all[22]}}</td>
+                <td>{{all[23]}}</td>
+                <td>{{all[24]}}</td>
+                <td>{{all[25]}}</td>
+                <td>{{all[26]}}</td>
+                <td>{{all[27]}}</td>
+                <td>{{all[28]}}</td>
+                <td>{{all[29]}}</td>
+                <td>{{all[30]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+{% endblock searchval %}

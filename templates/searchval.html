@@ -1,0 +1,333 @@
+{% extends 'devicesMange.html' %} {% block searchval %}
+<style>
+    .search {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        text-align: center;
+    }
+    
+    .search__input {
+        font-family: inherit;
+        font-size: inherit;
+        background-color: #f4f2f2;
+        border: none;
+        color: #646464;
+        padding: 0.7rem 1rem;
+        border-radius: 30px;
+        width: 12em;
+        transition: all ease-in-out .5s;
+        margin-right: -2rem;
+    }
+    
+    .search__input:hover,
+    .search__input:focus {
+        box-shadow: 0 0 1em #00000013;
+    }
+    
+    .search__input:focus {
+        outline: none;
+        background-color: #f0eeee;
+    }
+    
+    .search__input::-webkit-input-placeholder {
+        font-weight: 100;
+        color: #ccc;
+    }
+    
+    .search__input:focus+.search__button {
+        background-color: #f0eeee;
+    }
+    
+    .search__button {
+        border: none;
+        background-color: #f4f2f2;
+        margin-top: .1em;
+    }
+    
+    .search__button:hover {
+        cursor: pointer;
+    }
+    
+    .search__icon {
+        height: 1.3em;
+        width: 1.3em;
+        fill: #b4b4b4;
+    }
+</style>
+<div class="activity">
+
+
+    {% if categ == 'requ' %}
+    <div class="title">
+        <i class="uil uil-clock-three"></i>
+        <span class="text">طلبات</span>
+        <button id="exportDataButton" class="btn  mr-2">
+            <i><iconify-icon icon="icon-park-outline:excel"></iconify-icon></i>
+
+           </i>
+         </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exportDataButton').addEventListener('click', function() {
+                fetch('/export_data_data')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if ('file_data' in data) {
+                            const link = document.createElement('a');
+                            link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + data.file_data;
+                            link.download = 'data.xlsx';
+                            link.click();
+                        } else {
+                            alert('Error exporting data: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error exporting data: ' + error.message);
+                    });
+            });
+        });
+    </script>
+    {% endif %} {% if categ == 'labdev' %}
+    <div class="title">
+        <i class="uil uil-clock-three"></i>
+        <span class="text">اجهزة المعامل</span>
+        <button id="exportStorageButton" class="btn btn- mr-2">
+            <i><iconify-icon icon="icon-park-outline:excel"></iconify-icon></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exportStorageButton').addEventListener('click', function() {
+                fetch('/export_data_storage')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if ('file_data' in data) {
+                            // إنشاء رابط لتحميل الملف
+                            const link = document.createElement('a');
+                            link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + data.file_data;
+                            link.download = 'storage_data.xlsx';
+                            link.click();
+                        } else {
+                            alert('Error exporting storage data: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error exporting storage data: ' + error.message);
+                    });
+            });
+        });
+    </script>
+    {% endif %} {% if categ == 'coldev' %}
+    <div class="title">
+        <i class="uil uil-clock-three"></i>
+        <span class="text">اجهزة القسم</span>
+        <button id="exportCollDeviceButton" class="btn btn- mr-2">
+            <i><iconify-icon icon="icon-park-outline:excel"></iconify-icon></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exportCollDeviceButton').addEventListener('click', function() {
+                fetch('/Dashboard/export_data_Device_of_coll')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if ('file_data' in data) {
+                            const link = document.createElement('a');
+                            link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + data.file_data;
+                            link.download = 'device_data.xlsx';
+                            link.click();
+                        } else {
+                            alert('Error exporting device data: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error exporting device data: ' + error.message);
+                    });
+            });
+        });
+    </script>
+    {% endif %}
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+
+
+                {% if categ == 'requ' %}
+                <th scope="col">#</th>
+                <th scope="col">رقم المعمل </th>
+                <th scope="col">رقم الجهاز </th>
+                <th scope="col">التفاصيل </th>
+
+                {% endif %} {% if categ == 'labdev' %}
+                <th scope="col">#</th>
+                <th scope="col">رقم المعمل </th>
+                <th scope="col">رقم الجهاز </th>
+                <th scope="col">التفاصيل </th>
+
+                {% endif %} {% if categ == 'coldev' %}
+                <th scope="col">#</th>
+                <th scope="col">رقم الموظف </th>
+                <th scope="col">الرقم التسلسلي</th>
+                <th scope="col">التفاصيل </th>
+
+                {% endif %}
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in allLabDev %} {% if categ == 'labdev' %}
+            <tr>
+
+                <th scope="row">{{ i[0] }}</th>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
+                <td>
+
+                    <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#deviceDetailsModal{{ i[0] }}" style="background-color: #7D321D; border-color: #7D321D;">تفاصيل </button>
+                </td>
+            </tr>
+            {% endif %} {% if categ == 'requ' %}
+            <tr>
+
+                <th scope="row">{{ i[0] }}</th>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
+                <td>
+
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#deviceDetailsModal{{ i[0] }}" style="background-color: #7D321D; border-color: #7D321D;">التفاصيل </button>
+                </td>
+            </tr>
+            {% endif %} {% if categ == 'coldev' %}
+            <tr>
+
+                <th scope="row">{{ i[0] }}</th>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[8] }}</td>
+
+                <td>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#deviceDetailsModal{{ i[0] }}" style="background-color: #7D321D; border-color: #7D321D;">التفاصيل </button>
+                </td>
+            </tr>
+            {% endif %}
+
+
+
+
+            <div class="modal fade" id="deviceDetailsModal{{ i[0] }}" tabindex="-1" role="dialog" aria-labelledby="deviceDetailsModalLabel{{ i[0] }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+
+
+                        {% if categ == 'labdev' %}
+                        <div class="modal-header">
+                            <button type="button" style="margin-left: 0%;" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title" id="deviceDetailsModalLabel{{ i[0] }}">تفاصيل الاجهزة - {{ i[0] }}</h5>
+
+                        </div>
+
+                        <div class="modal-body text-right">
+                            <p>{{i[2]}} : معمل</p>
+                            <p>{{i[5]}} : العلامة التجارية</p>
+                            <p>{{i[4]}} : المعالج</p>
+                            <p>{{i[7]}} : الفاره</p>
+                            <p>{{i[6]}} : لوحة المفاتيح</p>
+                            <p>{{i[8]}} : شاشة</p>
+                            <p><a href="/generate_qr/LD-{{i[0]}}">الباركود</a></p>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق </button>
+                        </div>
+
+                        <form method="POST" action="/deletd">
+                            <input type="text" hidden name="request_id" value="{{i[0]}}" id="">
+                            <button type="submit" class="btn btn-danger">حذف الجهاز </button>
+                        </form>
+                        {% endif %} {% if categ == 'requ' %}
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: 0%;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title text-right" id="deviceDetailsModalLabel{{ i[0] }}">تفاصيل الطلب - {{ i[3] }}</h5>
+
+                        </div>
+                        <div class="modal-body text-right">
+                            <p> <span class="text-left">{{i[6]}}</span> : اسم الطالب </p>
+                            <p> <span class="text-left">{{i[5]}}</span> : رقم الطالب الجامعي </p>
+                            <p>رقم المعل <span style="color: rgb(138, 56, 56);" class="text-left">{{i[2]}}</span> <br> <br> <span style="color: rgb(138, 56, 56);" class="text-left">{{i[3]}}</span> : رقم الجهاز <br> <br><span style="color: rgb(138, 56, 56);"
+                                    class="text-left">{{i[1]}}</span> : التقرير
+                            </p>
+                        </div>
+                        <div class="modal-footer text-right">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        </div>
+                        {% endif %} {% if categ == 'coldev' %}
+                        <div class="modal-header">
+                            <button type="button" style="margin-left: 0%;" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title" id="deviceDetailsModalLabel{{ i[0] }}">تفاصيل الجهاز - {{ i[0] }}
+                            </h5>
+
+                        </div>
+                        <div class="modal-body text-right">
+                            <p>{{ i[1] }} : اسم الموظف</p>
+                            <p>{{ i[2] }} : المسمى الوظيفي</p>
+                            <p>{{ i[3] }} : الرقم الوظيفي</p>
+                            <p>{{ i[4] }} : القسم</p>
+                            <p>{{ i[5] }} : نوع الجهاز</p>
+                            <p>{{ i[6] }} : الشركة المصنعة</p>
+                            <p>{{ i[7] }} : الموديل</p>
+                            <p>{{ i[8] }} : الرقم التسلسلي</p>
+                            <p>{{ i[9] }} : الموقع</p>
+                            <p><a href="/generate_qr/ED-{{i[0]}}">الباركود </a></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق </button>
+                        </div>
+                        {% endif %}
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock searchval %}
